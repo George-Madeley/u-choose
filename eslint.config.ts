@@ -47,7 +47,6 @@ export default defineConfig([
       "react/hook-use-state": "warn",
       "react/jsx-boolean-value": "warn",
       "react/jsx-handler-names": "warn",
-      "react/jsx-no-bind": "error",
       "react/jsx-pascal-case": "error",
       "react/jsx-sort-props": "warn",
       "react/jsx-uses-react": "error",

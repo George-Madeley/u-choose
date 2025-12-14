@@ -7,6 +7,12 @@ const host = process.env.TAURI_DEV_HOST;
 // https://vite.dev/config/
 export default defineConfig(async () => ({
   plugins: [reactRouter(), tsconfigPaths()],
+  ssr: {
+    // This tells Vite to treat CSS as external during SSR
+    noExternal: ["@toolpad/core", "@mui/x-data-grid"], // or the package importing CSS
+    // Optionally: externalize all CSS imports
+    // external: /\.(css|less|sass|scss|styl)$/ // Vite v4+
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

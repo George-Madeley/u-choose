@@ -8,8 +8,20 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import ReactRouterAppProvider from "./providers/RouterRouterAppProvider";
+import theme from "./styles/theme";
+import { useEffect, useState, type PropsWithChildren } from "react";
+import type { Authentication, Session } from "@toolpad/core/AppProvider";
+import { firebaseSignOut, signInWithGoogle } from "./api/firebase/auth";
+import type { User } from "firebase/auth";
+import { firebaseAuth } from "./api/firebase/config";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+const AUTHENTICATION: Authentication = {
+  signIn: signInWithGoogle,
+  signOut: firebaseSignOut,
+};
+
+export function Layout(props: PropsWithChildren) {
   return (
     <html lang="en">
       <head>
@@ -19,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        {props.children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -28,7 +40,41 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    /**
+     * Subscribes to the `onIdTokenChanged` event to monitor across the app the
+     * authentication state of the user. Sets the session state accordingly.
+     */
+    const unsubscribe = firebaseAuth.onIdTokenChanged((user: User | null) => {
+      if (user) {
+        setSession({
+          user: {
+            name: user.displayName || "",
+            email: user.email || "",
+            image: user.photoURL || "",
+          },
+        });
+      } else {
+        setSession(null);
+      }
+    });
+    /**
+     * Unsubscribe from the `onIdTokenChanged` event
+     */
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <ReactRouterAppProvider
+      authentication={AUTHENTICATION}
+      session={session}
+      theme={theme}
+    >
+      <Outlet />
+    </ReactRouterAppProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
