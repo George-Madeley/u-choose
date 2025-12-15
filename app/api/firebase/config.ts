@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -10,7 +11,7 @@ const app = initializeApp({
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   databaseURL:
-    "https://u-choose-45ab4-default-rtdb.europe-west1.firebasedatabase.app",
+    "https://u-choose-45ab4-default-rtdb.europe-west1.firebasedatabase.app/",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGE_SENDER_ID,
@@ -19,11 +20,12 @@ const app = initializeApp({
 });
 
 export const firebaseAuth = getAuth(app);
+export const firebaseDb = getDatabase(app);
 
 /**
  * If in developer mode, use emulation server
  */
-if (import.meta.env.DEV)
-  connectAuthEmulator(firebaseAuth, "http://127.0.0.1:9099");
-
+// if (import.meta.env.DEV) {
+//   connectAuthEmulator(firebaseAuth, "http://127.0.0.1:9099");
+// }
 export default app;
