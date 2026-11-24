@@ -52,7 +52,7 @@ export default {
       "@semantic-release/exec",
       {
         verifyReleaseCmd:
-          "npm run set:version ./package.json ${nextRelease.version} && npm run set:version ./src-tauri/tauri.conf.json ${nextRelease.version}",
+          "yarn set:version ./package.json ${nextRelease.version} && yarn set:version ./tauri.conf.json ${nextRelease.version}",
       },
     ],
     [

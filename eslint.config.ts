@@ -12,7 +12,10 @@ export default defineConfig([
     "**/public/*",
     "**/build/*",
     "**/dist/*",
-    "**/src-tauri/*",
+    "backend/**",
+    "target/**",
+    "gen/**",
+    ".yarn/**",
     "**/.react-router/*",
   ]),
   {

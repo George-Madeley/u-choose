@@ -49,7 +49,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Node, npm and Yarn, taken from the official image. /usr/local/bin/yarn is a
-# symlink into /opt/yarn-v*, so the target has to be copied too.
+# symlink into /opt/yarn-v*, so the target has to be copied too. This Yarn only
+# hands over to the version in the repo (see yarnPath in .yarnrc.yml).
 COPY --from=node /usr/local/bin/ /usr/local/bin/
 COPY --from=node /opt/ /opt/
 COPY --from=node /usr/local/lib/node_modules/ /usr/local/lib/node_modules/

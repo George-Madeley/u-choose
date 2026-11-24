@@ -36,7 +36,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: npm
+          cache: yarn
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -53,12 +53,12 @@ jobs:
         # You can remove the one that doesn't apply to your app to speed up the workflow a bit.
 
       - name: Install Node dependencies
-        run: npm ci
+        run: yarn install --immutable
 
       - name: Get Next version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run release:dry
+        run: yarn release:dry
 
       - name: Build with tauri-action (no release token)
         uses: tauri-apps/tauri-action@v0
@@ -67,13 +67,13 @@ jobs:
 
       - name: Upload Tauri bundles as job artifact
         # Adjust the path below to where Tauri writes bundles in your project.
-        # Typical path: src-tauri/target/release/bundle (Tauri v1 & v2)
+        # Typical path: target/release/bundle (Tauri v1 & v2)
         uses: actions/upload-artifact@v4
         with:
           name: bundle-${{ matrix.platform }}-${{ matrix.args || 'default' }}
           path: |
-            src-tauri/target/release/bundle/**
-            src-tauri/target/release/bundle-*
+            target/release/bundle/**
+            target/release/bundle-*
 
   release:
     needs: build
@@ -88,7 +88,7 @@ jobs:
           node-version: lts/*
 
       - name: Install Node dependencies
-        run: npm ci
+        run: yarn install --immutable
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
@@ -98,4 +98,4 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run release:publish
+        run: yarn release:publish

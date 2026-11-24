@@ -28,4 +28,18 @@ node_modules
 dist
 dist-ssr
 build
-out
+out*.tsbuildinfo
+
+# Rust
+/target/
+
+# Tauri: schema files for capabilities auto-completion
+/gen/schemas
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

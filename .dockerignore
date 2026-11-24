@@ -1,4 +1,5 @@
-.react-router
-build
+frontend/.react-router
+frontend/build
 node_modules
+target
 README.md

@@ -1,5 +1,7 @@
 # dependencies
 node_modules
+.yarn
+yarn.lock
 
 # builds
 dist
@@ -7,12 +9,13 @@ build
 out
 .react-router
 
-# ci/cd
-.husky
-
 # backend
-src-tauri
+backend
+capabilities
+gen
+icons
 target
+tauri.conf.json
 
 # public
 public

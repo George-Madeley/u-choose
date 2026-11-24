@@ -3,8 +3,7 @@
  * set-json-version.ts
  *
  * Usage:
- *   ts-node set-json-version.ts path/to/file.json "1.2.3"
- *   # or build with tsc and run: node dist/set-json-version.js file.json 1.2.3
+ *   node set_version.ts path/to/file.json "1.2.3"
  *
  * Description:
  * - Accepts two positional args: a JSON file path and a version string.

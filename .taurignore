@@ -1,0 +1,33 @@
+# `tauri dev` watches the whole repo root, because that is where Cargo.toml is.
+# Ignore everything that isn't part of the Rust app, so that only changes to
+# backend/, capabilities/, icons/, Cargo.toml and tauri.conf.json restart it. The
+# frontend is reloaded by Vite HMR instead.
+#
+# New top-level files and folders are watched until they are added here. This is
+# a denylist because the watcher does not honour `/*` with `!` exceptions.
+
+# Folders
+/.claude/
+/.devcontainer/
+/.git/
+/.github/
+/.vscode/
+/.yarn/
+/frontend/
+/gen/
+/node_modules/
+/scripts/
+/target/
+/backend/tests/
+
+# Files
+/.*
+/*.md
+/*.ts
+/*.mjs
+/*.lock
+/*.log
+/package.json
+/tsconfig*.json
+/firebase.json
+/database.rules.json

@@ -48,45 +48,34 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "firebase-tools": "^14.27.0",
     "globals": "^16.5.0",
-    "husky": "^9.1.4",
     "jiti": "^2.6.1",
     "knip": "^5.63.0",
-    "lint-staged": "^15.2.8",
     "prettier": "^3.3.3",
     "semantic-release": "^24.2.3",
-    "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.46.3",
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4",
     "yargs": "^18.0.0"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,html,yml,css}": [
-      "prettier --write --ignore-unknown"
-    ],
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --quiet"
-    ]
-  },
   "name": "u-choose",
   "private": true,
   "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev",
+    "build": "cd frontend && react-router build",
+    "dev": "cd frontend && react-router dev",
     "knip": "knip",
     "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint --fix . && prettier --write .",
-    "prepare": "husky",
-    "preview": "react-router-serve ./build/server/index.js",
+    "preview": "cd frontend && react-router-serve ./build/server/index.js",
     "release:dry": "semantic-release --dry-run --no-ci",
     "release:publish": "semantic-release",
-    "set:version": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ./scripts/set_version.ts",
+    "set:version": "node ./scripts/set_version.ts",
     "tauri": "tauri",
-    "typecheck": "react-router typegen && tsc",
+    "typecheck": "yarn gen:types && tsc -b",
     "firebase": "firebase",
-    "gen:types": "react-router typegen"
+    "gen:types": "cd frontend && react-router typegen"
   },
   "type": "module",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "packageManager": "yarn@4.19.0"
 }

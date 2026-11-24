@@ -6,7 +6,12 @@ const host = process.env.TAURI_DEV_HOST;
 
 // https://vite.dev/config/
 export default defineConfig(async () => ({
-  plugins: [reactRouter(), tsconfigPaths()],
+  // The .env files are in the repo root
+  envDir: "..",
+  plugins: [
+    reactRouter(),
+    tsconfigPaths({ root: "..", projects: ["tsconfig.app.json"] }),
+  ],
   ssr: {
     // This tells Vite to treat CSS as external during SSR
     noExternal: ["@toolpad/core", "@mui/x-data-grid"], // or the package importing CSS
@@ -30,9 +35,5 @@ export default defineConfig(async () => ({
           port: 1421,
         }
       : undefined,
-    watch: {
-      // 3. tell Vite to ignore watching `src-tauri`
-      ignored: ["**/src-tauri/**"],
-    },
   },
 }));

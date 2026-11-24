@@ -47,7 +47,7 @@ Rules to design around (check the current Google Maps Platform terms):
 - **Google + Facebook OAuth.** Mobile catch: Google blocks OAuth inside embedded webviews, and `signInWithPopup` does not work in Tauri. On mobile, use the system browser (or native sign-in), receive a deep link back into the app, then call `signInWithCredential`. Budget real time for this.
 - **⚠ Apple rule (App Store guideline 4.8):** an app that offers Google/Facebook login must also offer an equivalent privacy-focused option, in practice **Sign in with Apple**. Plan to add it at least on iOS.
 - **Facebook Login** needs a Meta developer app, a privacy policy URL, a data-deletion callback/URL and app review.
-- Replace the template credentials sign-in (`app/routes/auth.signin.tsx` has demo defaults).
+- Replace the template credentials sign-in (`frontend/src/routes/auth.signin.tsx` has demo defaults).
 
 ### 2.4 Sharing: links & QR codes
 

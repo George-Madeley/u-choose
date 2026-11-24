@@ -21,7 +21,7 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
         "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
-        "rust-analyzer.linkedProjects": ["src-tauri/Cargo.toml"],
+        "rust-analyzer.linkedProjects": ["Cargo.toml"],
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
