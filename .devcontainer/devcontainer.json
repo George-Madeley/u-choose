@@ -1,0 +1,29 @@
+{
+  "name": "u-choose",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/u-choose",
+  "remoteUser": "build",
+  "updateRemoteUserUID": false,
+  "remoteEnv": {
+    "CLAUDE_CODE_OAUTH_TOKEN": "${localEnv:CLAUDE_CODE_OAUTH_TOKEN}"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "rust-lang.rust-analyzer",
+        "tauri-apps.tauri-vscode",
+        "Anthropic.claude-code"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
+        "rust-analyzer.linkedProjects": ["src-tauri/Cargo.toml"],
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}

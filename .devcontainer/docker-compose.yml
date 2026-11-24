@@ -1,0 +1,76 @@
+name: u-choose
+
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+      args:
+        # Override in .devcontainer/.env if `id -u` / `id -g` are not 1000.
+        BUILD_UID: ${BUILD_UID:-1000}
+        BUILD_GID: ${BUILD_GID:-1000}
+    image: u-choose:dev
+    init: true
+    environment:
+      # VS Code forwards the host Wayland socket and sets WAYLAND_DISPLAY and
+      # XDG_RUNTIME_DIR. No GPU is passed through, so render in software.
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    user: build
+    working_dir: /workspaces/u-choose
+    command: sleep infinity
+    volumes:
+      # Repository
+      - type: bind
+        source: ..
+        target: /workspaces/u-choose
+
+      # Download caches
+      - cargo_registry:/home/build/.cargo/registry
+      - cache:/home/build/.cache
+
+      # Shell. These must exist on the host: `create_host_path: false` stops
+      # Docker from creating a root-owned directory in place of a missing file.
+      - type: bind
+        source: ${HOME}/.bashrc
+        target: /home/build/.bashrc
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${HOME}/.inputrc
+        target: /home/build/.inputrc
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${HOME}/.history
+        target: /home/build/.history
+        bind:
+          create_host_path: false
+
+      # SSH keys. Mounted a second time at the host's own path so that absolute
+      # paths in .gitconfig (such as user.signingkey) also resolve.
+      - type: bind
+        source: ${HOME}/.ssh
+        target: /home/build/.ssh
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${HOME}/.ssh
+        target: ${HOME}/.ssh
+        read_only: true
+        bind:
+          create_host_path: false
+
+      # Git identity and signing settings
+      - type: bind
+        source: ${HOME}/.gitconfig
+        target: /etc/gitconfig.host
+        read_only: true
+        bind:
+          create_host_path: false
+
+volumes:
+  cargo_registry:
+  cache:
